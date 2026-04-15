@@ -7,6 +7,14 @@
     <meta name="description" content="SASA Solutions provides reliable, enterprise-class technology solutions and IT consulting to help your business grow.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Your specific Public Key
+            emailjs.init("rHnmsDCc9MzOeiCfR");
+        })();
+    </script>
 </head>
 <body>
 
@@ -66,7 +74,7 @@
     <section id="contact" class="contact section-padding">
         <div class="container contact-container">
             <div class="contact-text">
-                <h2>Ready to secure your network?</h2>
+                <h2>Ready to upgrade your tech?</h2>
                 <p>Contact us today for a FREE IT consultation and we'll show you what SASA Solutions can do for your business.</p>
                 <div class="contact-info">
                     <p><i class="fas fa-envelope"></i> info@sasasollutions.tech</p>
@@ -74,12 +82,14 @@
                 </div>
             </div>
             <div class="contact-form">
-                <form action="YOUR_FORMSPREE_ENDPOINT" method="POST">
-                    <input type="text" name="name" placeholder="Full Name*" required>
-                    <input type="email" name="email" placeholder="Business Email*" required>
-                    <input type="text" name="company" placeholder="Company Name">
-                    <textarea name="message" rows="5" placeholder="How can we help you?*" required></textarea>
+                <form id="contact-form">
+                    <input type="text" name="name" id="name" placeholder="Full Name*" required>
+                    <input type="email" name="email" id="email" placeholder="Business Email*" required>
+                    <input type="text" name="company" id="company" placeholder="Company Name">
+                    <textarea name="message" id="message" rows="5" placeholder="How can we help you?*" required></textarea>
+                    
                     <button type="submit" class="btn-primary submit-btn">Send Message</button>
+                    <p id="form-status" style="display:none; margin-top: 15px; font-weight: bold;"></p>
                 </form>
             </div>
         </div>
