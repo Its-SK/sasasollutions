@@ -7,8 +7,8 @@
 }
 
 :root {
-    --primary-color: #0b3d91; /* Deep Trust Blue */
-    --secondary-color: #0088cc; /* Tech Blue */
+    --primary-color: #0b3d91; 
+    --secondary-color: #0088cc; 
     --text-dark: #333;
     --text-light: #666;
     --bg-light: #f8f9fa;
@@ -242,7 +242,7 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-links {
-        display: none; /* In a real project, toggle this with JS */
+        display: none; 
     }
     .hamburger {
         display: block;
