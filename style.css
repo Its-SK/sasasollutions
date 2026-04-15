@@ -96,13 +96,12 @@ body {
     color: var(--primary-color);
 }
 
-/* NEW: 1:1 Logo Icon Size */
+/* UPDATED: Scales the logo perfectly without distortion */
 .logo-icon {
-    height: 45px; 
-    width: 45px; /* Explicitly matches height for a perfect 1:1 square */
-    object-fit: cover; /* Ensures the image fills the space without distortion */
-    border-radius: 8px; /* Optional: Adds a slight, modern curve to the sharp square corners */
-    display: block; /* Removes any weird invisible spacing under the image */
+    height: 55px; /* Slightly taller to make the text readable */
+    width: auto; /* Automatically adjusts width to prevent stretching */
+    object-fit: contain; 
+    display: block; 
 }
 
 .nav-links {
