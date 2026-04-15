@@ -81,15 +81,25 @@ body {
     height: 80px;
 }
 
+/* UPDATED: Horizontal Alignment */
 .logo {
     font-size: 1.8rem;
     font-weight: 800;
     text-decoration: none;
     color: var(--text-dark);
+    display: flex; /* Key for aligning image and text */
+    align-items: center; /* Vertical center alignment */
+    gap: 10px; /* Space between logo image and text */
 }
 
 .logo span {
     color: var(--primary-color);
+}
+
+/* NEW: Logo Icon Size */
+.logo-icon {
+    height: 45px; /* Size appropriate for an 80px navbar */
+    width: auto; /* Maintain aspect ratio */
 }
 
 .nav-links {
