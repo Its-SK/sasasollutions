@@ -96,10 +96,13 @@ body {
     color: var(--primary-color);
 }
 
-/* NEW: Logo Icon Size */
+/* NEW: 1:1 Logo Icon Size */
 .logo-icon {
-    height: 45px; /* Size appropriate for an 80px navbar */
-    width: auto; /* Maintain aspect ratio */
+    height: 45px; 
+    width: 45px; /* Explicitly matches height for a perfect 1:1 square */
+    object-fit: cover; /* Ensures the image fills the space without distortion */
+    border-radius: 8px; /* Optional: Adds a slight, modern curve to the sharp square corners */
+    display: block; /* Removes any weird invisible spacing under the image */
 }
 
 .nav-links {
