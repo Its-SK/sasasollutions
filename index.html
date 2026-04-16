@@ -28,7 +28,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#blog">Blog</a></li> <li><a href="#about">About</a></li>
                 <li><a href="#contact" class="btn-primary">Get a Free Consultation</a></li>
             </ul>
             <div class="hamburger">
@@ -51,26 +51,48 @@
             <p class="section-subtitle">Ensure your IT benefits your business without the hassles.</p>
             
             <div class="services-grid">
-                <div class="service-card">
+                <a href="service-details.html?id=web-dev" class="service-card">
                     <i class="fas fa-laptop-code"></i>
                     <h3>Web & App Development</h3>
                     <p>Custom websites and applications built to scale with your growing business needs.</p>
-                </div>
-                <div class="service-card">
+                </a>
+                <a href="service-details.html?id=managed-it" class="service-card">
                     <i class="fas fa-network-wired"></i>
                     <h3>Managed IT Services</h3>
                     <p>Proactive monitoring and maintenance of your networks, servers, and devices.</p>
-                </div>
-                <div class="service-card">
+                </a>
+                <a href="service-details.html?id=cybersecurity" class="service-card">
                     <i class="fas fa-shield-alt"></i>
                     <h3>Cybersecurity</h3>
                     <p>Protect your critical data from breaches with our enterprise-class security solutions.</p>
-                </div>
-                <div class="service-card">
+                </a>
+                <a href="service-details.html?id=consulting" class="service-card">
                     <i class="fas fa-server"></i>
                     <h3>IT Consulting</h3>
                     <p>Strategic technology guidance to align your IT infrastructure with your business goals.</p>
-                </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section id="blog" class="blog section-padding" style="background: var(--bg-light);">
+        <div class="container">
+            <h2 class="section-title">Tech News & Insights</h2>
+            <p class="section-subtitle">Stay updated with the latest in IT and software development.</p>
+
+            
+
+            <div id="article-grid" class="article-grid"></div>
+
+            <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px;">
+                <button id="load-more-btn" class="expand-btn" style="margin: 0;" title="Load More Articles">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <button id="collapse-btn" class="expand-btn" style="margin: 0; display: none;" title="Collapse Articles">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -95,6 +117,20 @@
                     <button type="submit" class="btn-primary submit-btn">Send Message</button>
                     <p id="form-status" style="display:none; margin-top: 15px; font-weight: bold;"></p>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about section-padding">
+        <div class="container about-container">
+            <div class="about-image">
+                <img src="profile.jpg" alt="Sk Samimjul Islam - Founder">
+            </div>
+            <div class="about-text">
+                <h2 class="section-title" style="text-align: left;">About The Founder</h2>
+                <p>Hi, I am Sk Samimjul Islam, the founder of SASA Solutions.</p>
+                <p>My journey in technology started with a deep passion for software development and solving real-world problems. As an IT specialist, I have spent years architecting and building complex systems—from comprehensive business billing applications to collaborative web platforms. I created SASA Solutions to bring that same level of dedication, modern engineering, and technical expertise to businesses looking to scale.</p>
+                <p>Whether you need a custom application built from scratch or a secure network infrastructure, my goal is to ensure your technology drives your success.</p>
             </div>
         </div>
     </section>
