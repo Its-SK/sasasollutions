@@ -1,0 +1,41 @@
+[
+    { 
+        "title": "Why Your Business Needs a Custom Web Application in 2026",
+        "tag": "Software Development",
+        "desc": "Off-the-shelf software can only take your business so far. Discover how building a custom, scalable web platform can automate your workflows.",
+        "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop",
+        "content": "<p>When businesses scale, off-the-shelf software often becomes a bottleneck. Monthly subscription costs rise, and you are forced to change your business processes to fit the software's limitations.</p><p>By investing in a custom web application, you own the platform. You can integrate specific security protocols, automate your unique billing cycles, and provide a seamless experience for your clients. At SASA Solutions, we build these scalable platforms using modern frameworks like React and custom cloud databases.</p>",
+        "featured": true
+    },
+    { 
+        "title": "5 Cybersecurity Threats Small Businesses Face", 
+        "desc": "Learn how to protect your sensitive client data from the most common phishing and ransomware attacks.",
+        "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=400&auto=format&fit=crop",
+        "content": "<p>Small businesses are often the primary target for cyber attacks because they typically have fewer security protocols in place compared to enterprise corporations.</p><p>The top threats include email phishing scams, unpatched software vulnerabilities, and weak remote-work endpoint security. Ensuring your team uses Multi-Factor Authentication (MFA) and regular cloud backups can mitigate 90% of these risks.</p>"
+    },
+    { 
+        "title": "Why Python is the Best Choice for Data Billing Apps", 
+        "desc": "A deep dive into why Python and custom databases create the most robust financial software.",
+        "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=400&auto=format&fit=crop",
+        "content": "<p>Python's incredible library ecosystem makes handling complex math, generating PDF invoices, and securely communicating with cloud databases incredibly efficient. It allows developers to build heavy-duty backend systems that process thousands of transactions without slowing down.</p>"
+    },
+    { 
+        "title": "The Hidden Costs of Bad Network Infrastructure", 
+        "desc": "How slow servers and poor network monitoring are secretly costing your company thousands.",
+        "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=400&auto=format&fit=crop",
+        "content": "<p>Bad network infrastructure can lead to significant financial losses through reduced productivity, data breaches, and increased maintenance costs. Investing in a robust network setup is crucial for any modern business.</p>"
+    },
+    { 
+        "title": "React vs Native: Choosing the Right Framework", 
+        "desc": "Thinking of building an app? Here is how to choose the right technology stack.",
+        "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=400&auto=format&fit=crop",
+        "content": "<p>When building a mobile application, choosing the right framework is crucial for performance, development time, and long-term maintainability.</p>"
+
+    },
+    { 
+        "title": "How to Prepare Your IT for a Natural Disaster", 
+        "desc": "Essential cloud backup strategies every business needs to implement.",
+        "image": "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=400&auto=format&fit=crop",
+        "content": "<p>Preparing your IT infrastructure for a natural disaster involves implementing robust cloud backup strategies to ensure data durability and business continuity.</p>"
+    }
+]
