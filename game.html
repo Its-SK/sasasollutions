@@ -15,14 +15,35 @@
             <h2 class="section-title">Draw & Guess Showcase</h2>
             <p class="section-subtitle">A live multiplayer demo built by SASA Solutions.</p>
             
-            <div class="game-container">
+            <!-- NEW: Room Selection Lobby -->
+            <div id="lobbyContainer" style="background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); max-width: 500px; margin: 0 auto; text-align: center;">
+                <h3 style="color: var(--primary-color); margin-bottom: 20px;">Welcome to SASA Draw!</h3>
                 
-                <!-- NEW: Word Selection Area -->
+                <input type="text" id="playerNameInput" placeholder="Enter Your Name" class="form-input" style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px;" required>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 20px;">
+                    <button id="showCreateBtn" class="btn-primary" style="flex: 1;">Create Room</button>
+                    <button id="showJoinBtn" class="btn-primary" style="flex: 1; background: #28a745;">Join Room</button>
+                </div>
+
+                <!-- Hidden Join Room Details -->
+                <div id="joinRoomDetails" style="display: none; margin-top: 15px;">
+                    <input type="text" id="roomIdInput" placeholder="Enter 4-Letter Room ID" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; text-transform: uppercase;" maxlength="4">
+                    <button id="joinSubmitBtn" class="btn-primary" style="width: 100%; background: #28a745;">Join Game Now</button>
+                    <p id="joinError" style="color: red; margin-top: 10px; display: none;"></p>
+                </div>
+            </div>
+
+            <!-- The Game Container (HIDDEN BY DEFAULT NOW) -->
+            <div id="mainGameContainer" class="game-container" style="display: none;">
+                
+                <div style="width: 100%; text-align: center; margin-bottom: 10px;">
+                    <h3 style="color: var(--text-light);">Room ID: <span id="displayRoomId" style="color: var(--primary-color); letter-spacing: 2px;"></span></h3>
+                </div>
+
                 <div id="wordSelectionArea" style="width: 100%; text-align: center; margin-bottom: 15px;">
                     <button id="startTurnBtn" class="btn-primary">Start My Turn</button>
-                    <div id="wordChoices" style="display: none; gap: 10px; justify-content: center; margin-top: 10px;">
-                        <!-- The 3 word buttons will be injected here by game.js -->
-                    </div>
+                    <div id="wordChoices" style="display: none; gap: 10px; justify-content: center; margin-top: 10px;"></div>
                     <h3 id="currentWordDisplay" style="color: var(--primary-color); display: none; margin-top: 10px;"></h3>
                 </div>
 
