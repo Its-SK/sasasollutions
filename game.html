@@ -16,6 +16,16 @@
             <p class="section-subtitle">A live multiplayer demo built by SASA Solutions.</p>
             
             <div class="game-container">
+                
+                <!-- NEW: Word Selection Area -->
+                <div id="wordSelectionArea" style="width: 100%; text-align: center; margin-bottom: 15px;">
+                    <button id="startTurnBtn" class="btn-primary">Start My Turn</button>
+                    <div id="wordChoices" style="display: none; gap: 10px; justify-content: center; margin-top: 10px;">
+                        <!-- The 3 word buttons will be injected here by game.js -->
+                    </div>
+                    <h3 id="currentWordDisplay" style="color: var(--primary-color); display: none; margin-top: 10px;"></h3>
+                </div>
+
                 <div class="canvas-container">
                     <div class="toolbar">
                         <input type="color" id="colorPicker" value="#0b3d91">
