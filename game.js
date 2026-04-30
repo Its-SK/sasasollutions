@@ -1,15 +1,72 @@
-// MUST USE YOUR RENDER URL HERE
 const socket = io('https://sasa-multiplayer-backend.onrender.com', {
     transports: ['websocket', 'polling']
 });
 
-// --- NEW: Word Selection DOM Elements ---
+// --- LOBBY & ROOM LOGIC ---
+const lobbyContainer = document.getElementById('lobbyContainer');
+const mainGameContainer = document.getElementById('mainGameContainer');
+const playerNameInput = document.getElementById('playerNameInput');
+const showCreateBtn = document.getElementById('showCreateBtn');
+const showJoinBtn = document.getElementById('showJoinBtn');
+const joinRoomDetails = document.getElementById('joinRoomDetails');
+const roomIdInput = document.getElementById('roomIdInput');
+const joinSubmitBtn = document.getElementById('joinSubmitBtn');
+const joinError = document.getElementById('joinError');
+const displayRoomId = document.getElementById('displayRoomId');
+
+let myPlayerName = '';
+let currentRoomId = '';
+
+// Toggles the Join input field
+showJoinBtn.addEventListener('click', () => {
+    joinRoomDetails.style.display = 'block';
+});
+
+// Handle Create Room
+showCreateBtn.addEventListener('click', () => {
+    myPlayerName = playerNameInput.value.trim();
+    if (!myPlayerName) return alert("Please enter your name first!");
+
+    socket.emit('createRoom', myPlayerName, (response) => {
+        if (response.success) {
+            enterGame(response.roomId);
+        }
+    });
+});
+
+// Handle Join Room
+joinSubmitBtn.addEventListener('click', () => {
+    myPlayerName = playerNameInput.value.trim();
+    const roomToJoin = roomIdInput.value.trim().toUpperCase();
+    
+    if (!myPlayerName) return alert("Please enter your name!");
+    if (roomToJoin.length !== 4) return alert("Room ID must be 4 letters.");
+
+    socket.emit('joinRoom', { playerName: myPlayerName, roomId: roomToJoin }, (response) => {
+        if (response.success) {
+            enterGame(response.roomId);
+        } else {
+            joinError.textContent = response.message;
+            joinError.style.display = 'block';
+        }
+    });
+});
+
+// Hides lobby and shows game
+function enterGame(roomId) {
+    currentRoomId = roomId;
+    lobbyContainer.style.display = 'none';
+    mainGameContainer.style.display = 'flex'; // Changed to flex to match your CSS setup
+    displayRoomId.textContent = roomId;
+}
+
+
+// --- WORD SELECTION & DRAWING LOGIC ---
 const startTurnBtn = document.getElementById('startTurnBtn');
 const wordChoicesDiv = document.getElementById('wordChoices');
 const currentWordDisplay = document.getElementById('currentWordDisplay');
-let amIDrawing = false; // Tracks if this player is the one currently drawing
+let amIDrawing = false; 
 
-// Canvas Setup
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const colorPicker = document.getElementById('colorPicker');
@@ -22,21 +79,18 @@ let current = { color: '#0b3d91', size: 5 };
 colorPicker.addEventListener('change', (e) => current.color = e.target.value);
 brushSize.addEventListener('change', (e) => current.size = e.target.value);
 
-// --- NEW: Word Selection Logic ---
-startTurnBtn.addEventListener('click', () => {
-    socket.emit('requestWords');
-});
+startTurnBtn.addEventListener('click', () => socket.emit('requestWords'));
 
 socket.on('wordChoices', (choices) => {
-    startTurnBtn.style.display = 'none'; // Hide the start button
-    wordChoicesDiv.style.display = 'flex'; // Show the choices area
-    wordChoicesDiv.innerHTML = ''; // Clear old choices
+    startTurnBtn.style.display = 'none'; 
+    wordChoicesDiv.style.display = 'flex'; 
+    wordChoicesDiv.innerHTML = ''; 
     
     choices.forEach(word => {
         const btn = document.createElement('button');
         btn.textContent = word;
         btn.className = 'btn-primary';
-        btn.style.background = '#28a745'; // Green color for choices
+        btn.style.background = '#28a745'; 
         btn.style.margin = '0 5px';
         btn.style.border = 'none';
         btn.style.padding = '8px 15px';
@@ -45,23 +99,18 @@ socket.on('wordChoices', (choices) => {
         btn.style.color = 'white';
         
         btn.addEventListener('click', () => {
-            socket.emit('wordSelected', word); // Send choice to server
-            
-            // Update UI for the drawer
+            socket.emit('wordSelected', word); 
             wordChoicesDiv.style.display = 'none';
             currentWordDisplay.style.display = 'block';
             currentWordDisplay.textContent = `You are drawing: ${word}`;
-            amIDrawing = true; // Allow this player to draw!
-            
-            // Clear the canvas for a fresh drawing
+            amIDrawing = true; 
             socket.emit('clearCanvas'); 
         });
-        
         wordChoicesDiv.appendChild(btn);
     });
 });
 
-// --- UPDATED: Drawing Logic (Restricted to Drawer) ---
+// Canvas Events
 canvas.addEventListener('mousedown', onMouseDown);
 canvas.addEventListener('mouseup', onMouseUp);
 canvas.addEventListener('mouseout', onMouseUp);
@@ -78,7 +127,7 @@ function getMousePos(e) {
 }
 
 function onMouseDown(e) {
-    if (!amIDrawing) return; // Prevent non-drawers from drawing
+    if (!amIDrawing) return; 
     drawing = true;
     const pos = getMousePos(e);
     current.x = pos.x;
@@ -114,17 +163,15 @@ function drawLine(x0, y0, x1, y1, color, size, emit) {
     socket.emit('drawing', { x0, y0, x1, y1, color, size });
 }
 
-socket.on('drawing', (data) => {
-    drawLine(data.x0, data.y0, data.x1, data.y1, data.color, data.size, false);
-});
+socket.on('drawing', (data) => drawLine(data.x0, data.y0, data.x1, data.y1, data.color, data.size, false));
 
-// Allow the active drawer to clear the canvas
 clearBtn.addEventListener('click', () => {
     if (amIDrawing) socket.emit('clearCanvas');
 });
 socket.on('clearCanvas', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 
-// --- UPDATED: Chat Logic ---
+
+// --- CHAT LOGIC ---
 const chatForm = document.getElementById('chatForm');
 const chatInput = document.getElementById('chatInput');
 const messages = document.getElementById('messages');
@@ -132,7 +179,6 @@ const messages = document.getElementById('messages');
 chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (chatInput.value) {
-        // Prevent the drawer from giving away the answer in chat!
         if (amIDrawing) {
             alert("No cheating! You cannot type in chat while you are the drawer.");
         } else {
@@ -142,27 +188,27 @@ chatForm.addEventListener('submit', (e) => {
     }
 });
 
+// Normal Chat Message (Allows HTML inside so we can bold names)
 socket.on('chatMessage', (msg) => {
     const item = document.createElement('li');
-    item.textContent = msg;
+    item.innerHTML = msg; // Changed to innerHTML to render the <strong> tags from the server
     messages.appendChild(item);
     messages.scrollTop = messages.scrollHeight;
 });
 
-// --- NEW: System Game Status Messages ---
+// System Game Status Messages
 socket.on('gameStatus', (msg) => {
     const item = document.createElement('li');
     item.textContent = msg;
     item.style.fontWeight = 'bold';
-    item.style.color = '#d9534f'; // Red text
-    item.style.background = '#fcf8e3'; // Yellow background
+    item.style.color = '#d9534f'; 
+    item.style.background = '#fcf8e3'; 
     messages.appendChild(item);
     messages.scrollTop = messages.scrollHeight;
     
-    // If the word was guessed, reset the turn so someone else can go!
-    if (msg.includes("guessed the word correctly")) {
-        amIDrawing = false; // Stop the drawer from drawing
-        currentWordDisplay.style.display = 'none'; // Hide the word
-        startTurnBtn.style.display = 'inline-block'; // Show the start button again
+    if (msg.includes("guessed it")) {
+        amIDrawing = false; 
+        currentWordDisplay.style.display = 'none'; 
+        startTurnBtn.style.display = 'inline-block'; 
     }
 });
