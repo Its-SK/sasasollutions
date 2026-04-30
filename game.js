@@ -56,7 +56,7 @@ joinSubmitBtn.addEventListener('click', () => {
 function enterGame(roomId) {
     currentRoomId = roomId;
     lobbyContainer.style.display = 'none';
-    mainGameContainer.style.display = 'flex'; // Changed to flex to match your CSS setup
+    mainGameContainer.style.display = 'flex'; 
     displayRoomId.textContent = roomId;
 }
 
@@ -110,40 +110,72 @@ socket.on('wordChoices', (choices) => {
     });
 });
 
-// Canvas Events
-canvas.addEventListener('mousedown', onMouseDown);
-canvas.addEventListener('mouseup', onMouseUp);
-canvas.addEventListener('mouseout', onMouseUp);
-canvas.addEventListener('mousemove', onMouseMove);
+// --- UPDATED: Universal Pointer Events (Mouse + Touch) ---
+canvas.addEventListener('mousedown', onPointerDown);
+canvas.addEventListener('mouseup', onPointerUp);
+canvas.addEventListener('mouseout', onPointerUp);
+canvas.addEventListener('mousemove', onPointerMove);
 
-function getMousePos(e) {
+// Add Touch Support for Mobile
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); 
+    onPointerDown(e);
+}, { passive: false });
+
+canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    onPointerUp(e);
+}, { passive: false });
+
+canvas.addEventListener('touchcancel', (e) => {
+    e.preventDefault();
+    onPointerUp(e);
+}, { passive: false });
+
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault(); 
+    onPointerMove(e);
+}, { passive: false });
+
+// Helper to grab either mouse or finger coordinates
+function getPointerPos(e) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;   
     const scaleY = canvas.height / rect.height; 
+    
+    let clientX = e.clientX;
+    let clientY = e.clientY;
+
+    // If it's a touch screen, grab the first finger's position
+    if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    }
+
     return {
-        x: (e.clientX - rect.left) * scaleX,
-        y: (e.clientY - rect.top) * scaleY
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
     }
 }
 
-function onMouseDown(e) {
+function onPointerDown(e) {
     if (!amIDrawing) return; 
     drawing = true;
-    const pos = getMousePos(e);
+    const pos = getPointerPos(e);
     current.x = pos.x;
     current.y = pos.y;
 }
 
-function onMouseUp(e) {
+function onPointerUp(e) {
     if (!drawing || !amIDrawing) return;
     drawing = false;
-    const pos = getMousePos(e);
+    const pos = getPointerPos(e);
     drawLine(current.x, current.y, pos.x, pos.y, current.color, current.size, true);
 }
 
-function onMouseMove(e) {
+function onPointerMove(e) {
     if (!drawing || !amIDrawing) return;
-    const pos = getMousePos(e);
+    const pos = getPointerPos(e);
     drawLine(current.x, current.y, pos.x, pos.y, current.color, current.size, true);
     current.x = pos.x;
     current.y = pos.y;
@@ -191,7 +223,7 @@ chatForm.addEventListener('submit', (e) => {
 // Normal Chat Message (Allows HTML inside so we can bold names)
 socket.on('chatMessage', (msg) => {
     const item = document.createElement('li');
-    item.innerHTML = msg; // Changed to innerHTML to render the <strong> tags from the server
+    item.innerHTML = msg; 
     messages.appendChild(item);
     messages.scrollTop = messages.scrollHeight;
 });
