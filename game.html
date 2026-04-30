@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SASA Solutions | Multiplayer Draw & Guess</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- PASTE YOUR SASA SOLUTIONS NAVBAR HERE -->
+
+    <section class="section-padding" style="background: var(--bg-light); min-height: 80vh;">
+        <div class="container">
+            <h2 class="section-title">Draw & Guess Showcase</h2>
+            <p class="section-subtitle">A live multiplayer demo built by SASA Solutions.</p>
+            
+            <div class="game-container">
+                <div class="canvas-container">
+                    <div class="toolbar">
+                        <input type="color" id="colorPicker" value="#0b3d91">
+                        <input type="range" id="brushSize" min="1" max="20" value="5">
+                        <button id="clearBtn" class="btn-primary" style="padding: 5px 15px;">Clear Canvas</button>
+                    </div>
+                    <canvas id="gameCanvas" width="800" height="500"></canvas>
+                </div>
+
+                <div class="chat-container">
+                    <ul id="messages"></ul>
+                    <form id="chatForm">
+                        <input id="chatInput" autocomplete="off" placeholder="Guess the word..." required />
+                        <button type="submit" class="btn-primary" style="border-radius: 0 4px 4px 0;">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PASTE YOUR SASA SOLUTIONS FOOTER HERE -->
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
