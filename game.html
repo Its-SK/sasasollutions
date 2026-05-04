@@ -24,13 +24,13 @@
             <h2 class="section-title">Draw & Guess Showcase</h2>
             <p class="section-subtitle">A live multiplayer demo built by SASA Solutions.</p>
             
-            <!-- NEW: Room Selection Lobby -->
+            <!-- Room Selection Lobby -->
             <div id="lobbyContainer" style="background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); max-width: 500px; margin: 0 auto; text-align: center;">
                 <h3 style="color: var(--primary-color); margin-bottom: 20px;">Welcome to SASA Draw!</h3>
                 
                 <input type="text" id="playerNameInput" placeholder="Enter Your Name" class="form-input" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;" required>
                 
-                <!-- NEW: Rounds Selector for Creating a Room -->
+                <!-- Rounds Selector for Creating a Room -->
                 <div style="margin-bottom: 20px; text-align: left;">
                     <label style="font-weight: bold; font-size: 0.9rem; color: var(--text-light);">Number of Rounds (Create Only):</label>
                     <select id="roundsInput" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px;">
@@ -63,7 +63,7 @@
                     <h3 style="color: #d9534f; font-size: 1.2rem;">Time: <span id="timerDisplay">--</span>s</h3>
                 </div>
 
-                <!-- NEW: Live Scoreboard -->
+                <!-- Live Scoreboard -->
                 <div id="scoreboard" style="width: 100%; display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
                     <!-- Player scores will be injected here automatically -->
                 </div>
@@ -90,6 +90,17 @@
                         <button type="submit" class="btn-primary" style="border-radius: 0 4px 4px 0;">Send</button>
                     </form>
                 </div>
+
+                <!-- NEW: Game Over Modal -->
+                <div id="gameOverModal">
+                    <div class="modal-content">
+                        <h2 style="color: var(--primary-color); margin-bottom: 10px;">🏆 Game Over!</h2>
+                        <h3 id="winnerDisplay" style="color: #28a745; margin-bottom: 20px;"></h3>
+                        <ul id="finalScoresList" style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8;"></ul>
+                        <button id="closeModalBtn" class="btn-primary" style="width: 100%;">Close & Play Again</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
