@@ -55,7 +55,10 @@ function enterGame(roomId) {
 const soundStart = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); 
 const soundSuccess = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3'); 
 const soundTick = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
-soundTick.volume = 0.5; // Lower the volume of the tick
+// Set all sound volumes to 40%
+soundStart.volume = 0.3;
+soundSuccess.volume = 0.3;
+soundTick.volume = 0.3;
 
 
 // --- GAME LOOP & SCOREBOARD LOGIC ---
