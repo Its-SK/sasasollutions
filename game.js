@@ -51,12 +51,31 @@ function enterGame(roomId) {
 }
 
 
-// --- GAME LOOP LOGIC ---
+// --- GAME LOOP & SCOREBOARD LOGIC ---
 const startGameBtn = document.getElementById('startGameBtn');
 const wordChoicesDiv = document.getElementById('wordChoices');
 const currentWordDisplay = document.getElementById('currentWordDisplay');
 const timerDisplay = document.getElementById('timerDisplay');
+const scoreboardDiv = document.getElementById('scoreboard'); // NEW: Scoreboard div
 let amIDrawing = false; 
+
+// NEW: Listen for score updates from the server
+socket.on('updateScores', (players) => {
+    scoreboardDiv.innerHTML = ''; // Clear old scores
+    
+    // Sort players by highest score, then create a badge for each one
+    players.sort((a, b) => b.score - a.score).forEach(p => {
+        const badge = document.createElement('div');
+        badge.style.padding = '5px 12px';
+        badge.style.background = '#e9ecef';
+        badge.style.borderRadius = '20px';
+        badge.style.fontSize = '0.9rem';
+        badge.style.fontWeight = 'bold';
+        badge.style.color = '#333';
+        badge.textContent = `👤 ${p.name}: ${p.score} pts`;
+        scoreboardDiv.appendChild(badge);
+    });
+});
 
 // Anyone can click Start Game to kick off the loop
 startGameBtn.addEventListener('click', () => socket.emit('startGame'));
