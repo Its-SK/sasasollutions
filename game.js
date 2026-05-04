@@ -51,15 +51,22 @@ function enterGame(roomId) {
 }
 
 
+// --- SOUND EFFECTS ---
+const soundStart = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); 
+const soundSuccess = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3'); 
+const soundTick = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
+soundTick.volume = 0.5; // Lower the volume of the tick
+
+
 // --- GAME LOOP & SCOREBOARD LOGIC ---
 const startGameBtn = document.getElementById('startGameBtn');
 const wordChoicesDiv = document.getElementById('wordChoices');
 const currentWordDisplay = document.getElementById('currentWordDisplay');
 const timerDisplay = document.getElementById('timerDisplay');
-const scoreboardDiv = document.getElementById('scoreboard'); // NEW: Scoreboard div
+const scoreboardDiv = document.getElementById('scoreboard'); 
 let amIDrawing = false; 
 
-// NEW: Listen for score updates from the server
+// Listen for score updates from the server
 socket.on('updateScores', (players) => {
     scoreboardDiv.innerHTML = ''; // Clear old scores
     
@@ -129,9 +136,15 @@ socket.on('yourTurn', (choices) => {
     });
 });
 
-// Update the Timer UI every second
+// Update the Timer UI every second AND play tick sound
 socket.on('timerUpdate', (timeLeft) => {
     timerDisplay.textContent = timeLeft;
+    
+    // Play the ticking sound for the last 10 seconds
+    if (timeLeft <= 10 && timeLeft > 0) {
+        soundTick.currentTime = 0; // Rewind the sound to the start
+        soundTick.play().catch(e => console.log("Sound blocked by browser"));
+    }
 });
 
 
@@ -236,6 +249,7 @@ socket.on('chatMessage', (msg) => {
     messages.scrollTop = messages.scrollHeight;
 });
 
+// Update Game Status to play Start and Success sounds
 socket.on('gameStatus', (msg) => {
     const item = document.createElement('li');
     item.textContent = msg;
@@ -244,4 +258,14 @@ socket.on('gameStatus', (msg) => {
     item.style.background = '#fcf8e3'; 
     messages.appendChild(item);
     messages.scrollTop = messages.scrollHeight;
+
+    // Trigger Sounds based on the broadcasted message text
+    if (msg.includes("Word selected!")) {
+        soundStart.play().catch(e => console.log("Sound blocked by browser"));
+    }
+    
+    if (msg.includes("guessed the word!")) {
+        soundSuccess.currentTime = 0;
+        soundSuccess.play().catch(e => console.log("Sound blocked by browser"));
+    }
 });
