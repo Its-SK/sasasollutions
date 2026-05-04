@@ -55,7 +55,7 @@ function enterGame(roomId) {
 const soundStart = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'); 
 const soundSuccess = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3'); 
 const soundTick = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
-// Set all sound volumes to 40%
+// Set all sound volumes to 30%
 soundStart.volume = 0.3;
 soundSuccess.volume = 0.3;
 soundTick.volume = 0.3;
@@ -94,10 +94,47 @@ socket.on('gameStarted', () => {
     startGameBtn.style.display = 'none'; // Hide the start button while playing
 });
 
-socket.on('gameOver', () => {
-    startGameBtn.style.display = 'inline-block'; // Bring it back when the game finishes
+// --- NEW: MODAL LOGIC ---
+const gameOverModal = document.getElementById('gameOverModal');
+const winnerDisplay = document.getElementById('winnerDisplay');
+const finalScoresList = document.getElementById('finalScoresList');
+const closeModalBtn = document.getElementById('closeModalBtn');
+
+closeModalBtn.addEventListener('click', () => {
+    gameOverModal.style.display = 'none'; // Hide modal when clicked
+});
+
+// Update the gameOver event to receive the sorted scores
+socket.on('gameOver', (sortedPlayers) => {
+    startGameBtn.style.display = 'inline-block'; // Bring back start button
     amIDrawing = false;
     currentWordDisplay.style.display = 'none';
+
+    // Figure out the winner (the first person in the sorted list)
+    const winner = sortedPlayers[0];
+    
+    // Fill the Modal with text
+    winnerDisplay.textContent = `Winner: ${winner.name} with ${winner.score} pts!`;
+    
+    finalScoresList.innerHTML = '';
+    sortedPlayers.forEach((p, index) => {
+        const li = document.createElement('li');
+        li.textContent = `#${index + 1} - ${p.name}: ${p.score} pts`;
+        
+        // Highlight the winner in gold
+        if (index === 0) {
+            li.style.fontWeight = 'bold';
+            li.style.color = '#ff9800'; 
+        }
+        finalScoresList.appendChild(li);
+    });
+
+    // Show the Popup!
+    gameOverModal.style.display = 'flex';
+    
+    // Play the success sound
+    soundSuccess.currentTime = 0;
+    soundSuccess.play().catch(e => console.log("Sound blocked by browser"));
 });
 
 // Server says it's someone else's turn
