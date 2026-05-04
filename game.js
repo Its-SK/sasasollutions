@@ -2,10 +2,11 @@ const socket = io('https://sasa-multiplayer-backend.onrender.com', {
     transports: ['websocket', 'polling']
 });
 
-// --- LOBBY & ROOM LOGIC ---
+// --- LOBBY LOGIC ---
 const lobbyContainer = document.getElementById('lobbyContainer');
 const mainGameContainer = document.getElementById('mainGameContainer');
 const playerNameInput = document.getElementById('playerNameInput');
+const roundsInput = document.getElementById('roundsInput');
 const showCreateBtn = document.getElementById('showCreateBtn');
 const showJoinBtn = document.getElementById('showJoinBtn');
 const joinRoomDetails = document.getElementById('joinRoomDetails');
@@ -17,42 +18,31 @@ const displayRoomId = document.getElementById('displayRoomId');
 let myPlayerName = '';
 let currentRoomId = '';
 
-// Toggles the Join input field
-showJoinBtn.addEventListener('click', () => {
-    joinRoomDetails.style.display = 'block';
-});
+showJoinBtn.addEventListener('click', () => joinRoomDetails.style.display = 'block');
 
-// Handle Create Room
 showCreateBtn.addEventListener('click', () => {
     myPlayerName = playerNameInput.value.trim();
+    const rounds = parseInt(roundsInput.value); // Get selected rounds
     if (!myPlayerName) return alert("Please enter your name first!");
 
-    socket.emit('createRoom', myPlayerName, (response) => {
-        if (response.success) {
-            enterGame(response.roomId);
-        }
+    // Send name AND rounds to server
+    socket.emit('createRoom', { playerName: myPlayerName, rounds: rounds }, (response) => {
+        if (response.success) enterGame(response.roomId);
     });
 });
 
-// Handle Join Room
 joinSubmitBtn.addEventListener('click', () => {
     myPlayerName = playerNameInput.value.trim();
     const roomToJoin = roomIdInput.value.trim().toUpperCase();
-    
     if (!myPlayerName) return alert("Please enter your name!");
     if (roomToJoin.length !== 4) return alert("Room ID must be 4 letters.");
 
     socket.emit('joinRoom', { playerName: myPlayerName, roomId: roomToJoin }, (response) => {
-        if (response.success) {
-            enterGame(response.roomId);
-        } else {
-            joinError.textContent = response.message;
-            joinError.style.display = 'block';
-        }
+        if (response.success) enterGame(response.roomId);
+        else { joinError.textContent = response.message; joinError.style.display = 'block'; }
     });
 });
 
-// Hides lobby and shows game
 function enterGame(roomId) {
     currentRoomId = roomId;
     lobbyContainer.style.display = 'none';
@@ -61,28 +51,40 @@ function enterGame(roomId) {
 }
 
 
-// --- WORD SELECTION & DRAWING LOGIC ---
-const startTurnBtn = document.getElementById('startTurnBtn');
+// --- GAME LOOP LOGIC ---
+const startGameBtn = document.getElementById('startGameBtn');
 const wordChoicesDiv = document.getElementById('wordChoices');
 const currentWordDisplay = document.getElementById('currentWordDisplay');
+const timerDisplay = document.getElementById('timerDisplay');
 let amIDrawing = false; 
 
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const colorPicker = document.getElementById('colorPicker');
-const brushSize = document.getElementById('brushSize');
-const clearBtn = document.getElementById('clearBtn');
+// Anyone can click Start Game to kick off the loop
+startGameBtn.addEventListener('click', () => socket.emit('startGame'));
 
-let drawing = false;
-let current = { color: '#0b3d91', size: 5 };
+socket.on('gameStarted', () => {
+    startGameBtn.style.display = 'none'; // Hide the start button while playing
+});
 
-colorPicker.addEventListener('change', (e) => current.color = e.target.value);
-brushSize.addEventListener('change', (e) => current.size = e.target.value);
+socket.on('gameOver', () => {
+    startGameBtn.style.display = 'inline-block'; // Bring it back when the game finishes
+    amIDrawing = false;
+    currentWordDisplay.style.display = 'none';
+});
 
-startTurnBtn.addEventListener('click', () => socket.emit('requestWords'));
+// Server says it's someone else's turn
+socket.on('newTurn', (data) => {
+    wordChoicesDiv.style.display = 'none';
+    currentWordDisplay.style.display = 'none';
+    
+    // If the ID doesn't match ours, we are NOT drawing
+    if (socket.id !== data.drawerId) {
+        amIDrawing = false;
+    }
+});
 
-socket.on('wordChoices', (choices) => {
-    startTurnBtn.style.display = 'none'; 
+// Server says it's YOUR turn
+socket.on('yourTurn', (choices) => {
+    amIDrawing = true; 
     wordChoicesDiv.style.display = 'flex'; 
     wordChoicesDiv.innerHTML = ''; 
     
@@ -103,59 +105,51 @@ socket.on('wordChoices', (choices) => {
             wordChoicesDiv.style.display = 'none';
             currentWordDisplay.style.display = 'block';
             currentWordDisplay.textContent = `You are drawing: ${word}`;
-            amIDrawing = true; 
-            socket.emit('clearCanvas'); 
         });
         wordChoicesDiv.appendChild(btn);
     });
 });
 
-// --- UPDATED: Universal Pointer Events (Mouse + Touch) ---
+// Update the Timer UI every second
+socket.on('timerUpdate', (timeLeft) => {
+    timerDisplay.textContent = timeLeft;
+});
+
+
+// --- DRAWING LOGIC ---
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const colorPicker = document.getElementById('colorPicker');
+const brushSize = document.getElementById('brushSize');
+const clearBtn = document.getElementById('clearBtn');
+
+let drawing = false;
+let current = { color: '#0b3d91', size: 5 };
+
+colorPicker.addEventListener('change', (e) => current.color = e.target.value);
+brushSize.addEventListener('change', (e) => current.size = e.target.value);
+
 canvas.addEventListener('mousedown', onPointerDown);
 canvas.addEventListener('mouseup', onPointerUp);
 canvas.addEventListener('mouseout', onPointerUp);
 canvas.addEventListener('mousemove', onPointerMove);
 
-// Add Touch Support for Mobile
-canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault(); 
-    onPointerDown(e);
-}, { passive: false });
+canvas.addEventListener('touchstart', (e) => { e.preventDefault(); onPointerDown(e); }, { passive: false });
+canvas.addEventListener('touchend', (e) => { e.preventDefault(); onPointerUp(e); }, { passive: false });
+canvas.addEventListener('touchcancel', (e) => { e.preventDefault(); onPointerUp(e); }, { passive: false });
+canvas.addEventListener('touchmove', (e) => { e.preventDefault(); onPointerMove(e); }, { passive: false });
 
-canvas.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    onPointerUp(e);
-}, { passive: false });
-
-canvas.addEventListener('touchcancel', (e) => {
-    e.preventDefault();
-    onPointerUp(e);
-}, { passive: false });
-
-canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault(); 
-    onPointerMove(e);
-}, { passive: false });
-
-// Helper to grab either mouse or finger coordinates
 function getPointerPos(e) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;   
     const scaleY = canvas.height / rect.height; 
-    
     let clientX = e.clientX;
     let clientY = e.clientY;
-
-    // If it's a touch screen, grab the first finger's position
     if (e.touches && e.touches.length > 0) {
         clientX = e.touches[0].clientX;
         clientY = e.touches[0].clientY;
     }
-
-    return {
-        x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY
-    }
+    return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY }
 }
 
 function onPointerDown(e) {
@@ -190,16 +184,12 @@ function drawLine(x0, y0, x1, y1, color, size, emit) {
     ctx.lineCap = 'round';
     ctx.stroke();
     ctx.closePath();
-
     if (!emit) return;
     socket.emit('drawing', { x0, y0, x1, y1, color, size });
 }
 
 socket.on('drawing', (data) => drawLine(data.x0, data.y0, data.x1, data.y1, data.color, data.size, false));
-
-clearBtn.addEventListener('click', () => {
-    if (amIDrawing) socket.emit('clearCanvas');
-});
+clearBtn.addEventListener('click', () => { if (amIDrawing) socket.emit('clearCanvas'); });
 socket.on('clearCanvas', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 
 
@@ -220,7 +210,6 @@ chatForm.addEventListener('submit', (e) => {
     }
 });
 
-// Normal Chat Message (Allows HTML inside so we can bold names)
 socket.on('chatMessage', (msg) => {
     const item = document.createElement('li');
     item.innerHTML = msg; 
@@ -228,7 +217,6 @@ socket.on('chatMessage', (msg) => {
     messages.scrollTop = messages.scrollHeight;
 });
 
-// System Game Status Messages
 socket.on('gameStatus', (msg) => {
     const item = document.createElement('li');
     item.textContent = msg;
@@ -237,10 +225,4 @@ socket.on('gameStatus', (msg) => {
     item.style.background = '#fcf8e3'; 
     messages.appendChild(item);
     messages.scrollTop = messages.scrollHeight;
-    
-    if (msg.includes("guessed it")) {
-        amIDrawing = false; 
-        currentWordDisplay.style.display = 'none'; 
-        startTurnBtn.style.display = 'inline-block'; 
-    }
 });
