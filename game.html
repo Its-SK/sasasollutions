@@ -54,19 +54,22 @@
                 </div>
             </div>
 
-            <!-- The Game Container (HIDDEN BY DEFAULT NOW) -->
+            <!-- MAIN GAME -->
             <div id="mainGameContainer" class="game-container" style="display: none;">
                 
-                <!-- NEW: Header with Room ID and Timer -->
+                <!-- Header with Room ID and Timer -->
                 <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 10px;">
                     <h3 style="color: var(--text-light); font-size: 1.2rem;">Room: <span id="displayRoomId" style="color: var(--primary-color); letter-spacing: 2px;"></span></h3>
                     <h3 style="color: #d9534f; font-size: 1.2rem;">Time: <span id="timerDisplay">--</span>s</h3>
                 </div>
 
+                <!-- NEW: Live Scoreboard -->
+                <div id="scoreboard" style="width: 100%; display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
+                    <!-- Player scores will be injected here automatically -->
+                </div>
+
                 <div id="wordSelectionArea" style="width: 100%; text-align: center; margin-bottom: 15px;">
-                    <!-- NEW: Start Game Button (Replaces "Start My Turn") -->
                     <button id="startGameBtn" class="btn-primary" style="width: 100%; max-width: 300px; background: #ff9800;">Start Game Loop</button>
-                    
                     <div id="wordChoices" style="display: none; gap: 10px; justify-content: center; margin-top: 10px;"></div>
                     <h3 id="currentWordDisplay" style="color: var(--primary-color); display: none; margin-top: 10px;"></h3>
                 </div>
