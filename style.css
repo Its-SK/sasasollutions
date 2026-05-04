@@ -22,6 +22,7 @@ html {
 body {
     color: var(--text-dark);
     line-height: 1.6;
+    cursor: auto;
 }
 
 .container {
@@ -430,10 +431,22 @@ footer {
     }
 }
 
+
+
 .game-container { display: flex; flex-wrap: wrap; gap: 20px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); justify-content: center; cursor: url('https://img.icons8.com/color/24/000000/pencil.png') 0 24, crosshair !important;}
 .canvas-container { flex: 1; min-width: 300px; }
 .toolbar { margin-bottom: 15px; display: flex; gap: 15px; align-items: center; }
-#gameCanvas { width: 100%; max-width: 800px; border: 2px solid #ddd; border-radius: 8px; cursor: crosshair; background-color: var(--white); touch-action: none; }
+#gameCanvas {
+    width: 100%;
+    max-width: 800px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: var(--white);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+    touch-action: none;
+    /* This tells the browser: ONLY use the pencil when hovering directly over this exact element */
+    cursor: url('https://img.icons8.com/color/24/000000/pencil.png') 0 24, crosshair !important;
+}
 .chat-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; border: 2px solid #ddd; border-radius: 8px; background: #fdfdfd; }
 #messages { list-style-type: none; margin: 0; padding: 15px; flex-grow: 1; overflow-y: auto; height: 400px; }
 #messages li { padding: 8px 12px; margin-bottom: 5px; background: #f1f1f1; border-radius: 4px; }
