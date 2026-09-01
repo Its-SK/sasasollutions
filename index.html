@@ -36,8 +36,11 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
+                <!-- NEW: Apps Link -->
+                <li><a href="apps.html">Apps</a></li> 
                 <li><a href="#services">Services</a></li>
-                <li><a href="#blog">Blog</a></li> <li><a href="#about">About</a></li>
+                <li><a href="#blog">Blog</a></li> 
+                <li><a href="#about">About</a></li>
                 <li><a href="#contact" class="btn-primary">Get a Free Consultation</a></li>
                 <li><a href="game.html" style="color: var(--secondary-color); font-weight: bold;"><i class="fas fa-gamepad"></i> Play Game</a></li>
             </ul>
@@ -47,7 +50,30 @@
         </div>
     </nav>
 
-    <header id="home" class="hero">
+    <!-- NEW: Latest Release Banner -->
+    <section id="latest-release" style="background: var(--bg-light); padding: 100px 20px 20px 20px; text-align: center; border-bottom: 1px solid #eee;">
+        <div class="container">
+            <span style="background: #ff9800; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;">Latest Release</span>
+            
+            <a href="sasa-mirror-download.html" style="text-decoration: none; display: block; max-width: 650px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+                    <div style="background: var(--white); padding: 12px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <!-- CHANGED: Replaced phone icon with your custom logo -->
+                        <img src="sasamirrorlogo.png" alt="SaSa Mirror Logo" style="width: 32px; height: 32px; object-fit: contain;">
+                    </div>
+                    <div style="text-align: left; flex: 1;">
+                        <h3 style="color: var(--primary-color); margin: 0 0 5px 0; font-size: 1.5rem;">SaSa Mirror</h3>
+                        <p style="color: var(--text-light); margin: 0; font-size: 1rem;">The ultimate screen mirroring tool for PC & Android. Download it now!</p>
+                    </div>
+                    <div style="background: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 8px; font-weight: bold;">
+                        Get It <i class="fas fa-chevron-right" style="margin-left: 5px;"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <header id="home" class="hero" style="padding-top: 60px;">
         <div class="container hero-content">
             <h1>Award-Winning Managed IT & Software Solutions</h1>
             <p>SASA Solutions is effective, reliable, and easy to work with. We provide the technology infrastructure your business needs to reach its full potential.</p>
@@ -85,17 +111,11 @@
         </div>
     </section>
 
-    
-
     <section id="blog" class="blog section-padding" style="background: var(--bg-light);">
         <div class="container">
             <h2 class="section-title">Tech News & Insights</h2>
             <p class="section-subtitle">Stay updated with the latest in IT and software development.</p>
-
-            
-
             <div id="article-grid" class="article-grid"></div>
-
             <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px;">
                 <button id="load-more-btn" class="expand-btn" style="margin: 0;" title="Load More Articles">
                     <i class="fas fa-chevron-down"></i>
