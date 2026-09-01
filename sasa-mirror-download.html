@@ -9,22 +9,48 @@
       gtag('js', new Date());
       gtag('config', 'G-H85WKNMF92');
 
-      // Function to track downloads
       function trackDownload(appName) {
-          gtag('event', 'app_download', {
-              'app_name': appName
-          });
+          gtag('event', 'app_download', { 'app_name': appName });
       }
     </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download SaSa Mirror | SASA Solutions</title>
+    
+    <!-- SEO Title & Description -->
+    <title>SaSa Mirror App Download | Screen Mirroring for PC & Android</title>
+    <meta name="description" content="Download SaSa Mirror app for Windows and Android. Cast your mobile screen to your PC with low latency and high performance.">
+    <meta name="keywords" content="SaSa Mirror, SaSa Mirror app, download sasa mirror, screen mirroring app, android to pc mirror">
+    
+    <!-- Open Graph (For Social Shares & Search Snippets) -->
+    <meta property="og:title" content="SaSa Mirror App | Fast & Lag-Free Screen Mirroring">
+    <meta property="og:description" content="Download SaSa Mirror for Windows PC and Android.">
+    <meta property="og:image" content="https://sasasolutions.tech/sasamirrorlogo.png">
+    <meta property="og:url" content="https://sasasolutions.tech/sasa-mirror.html">
+    <meta property="og:type" content="website">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Structured Data for Google (SoftwareApplication Schema) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SaSa Mirror",
+      "operatingSystem": "Windows, Android",
+      "applicationCategory": "UtilitiesApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Seamless screen mirroring application connecting Android devices to Windows PC."
+    }
+    </script>
 </head>
 <body style="background: var(--bg-light);">
 
-    <!-- FIX: Removed the blue background style from the nav -->
     <nav class="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">
@@ -41,7 +67,6 @@
     <section class="section-padding" style="padding-top: 120px; min-height: 80vh; display: flex; align-items: center;">
         <div class="container text-center">
             
-            <!-- CHANGED: Replaced large phone icon with your custom logo -->
             <img src="sasamirrorlogo.png" alt="SaSa Mirror Logo" style="width: 90px; height: 90px; object-fit: contain; margin-bottom: 15px;">
             
             <h2 class="section-title">Download SaSa Mirror</h2>
@@ -63,6 +88,16 @@
                     <a href="https://github.com/Its-SK/sasasollutions/releases/download/v1.0.0/SaSa.Mirror.apk" download onclick="trackDownload('SaSaMirror_Android')" class="btn-primary" style="display: block; width: 100%; background: #3DDC84; color: #fff;">Download .APK</a>
                 </div>
 
+            </div> <!-- Flex container ends here -->
+
+            <!-- Information section perfectly centered below the buttons -->
+            <div style="margin-top: 50px; text-align: left; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">Why Choose SaSa Mirror?</h3>
+                <ul style="line-height: 1.8; color: var(--text-dark); margin-left: 20px;">
+                    <li><strong>Ultra-Low Latency:</strong> Real-time screen mirroring for gaming, presentations, and media playback.</li>
+                    <li><strong>Cross-Platform Support:</strong> Fully compatible with Android devices and Windows PCs.</li>
+                    <li><strong>Easy Setup:</strong> No complicated network configurations required.</li>
+                </ul>
             </div>
             
             <p style="margin-top: 40px; color: #777; font-size: 0.9rem;">
