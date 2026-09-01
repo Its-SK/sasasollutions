@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H85WKNMF92"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H85WKNMF92');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Apps | SASA Solutions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: var(--bg-light);">
+    
+    <!-- FIX: Removed the blue background style from the nav -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="sasalogo croped.png" alt="SASA Solutions Logo" class="logo-icon">
+                <span>SASA</span> Solutions
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="apps.html" style="color: var(--secondary-color); font-weight: bold;">Apps</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- App Gallery Section -->
+    <section class="section-padding" style="padding-top: 120px; min-height: 70vh;">
+        <div class="container text-center">
+            <h2 class="section-title">Our Applications</h2>
+            <p class="section-subtitle">Explore software built by SASA Solutions</p>
+            
+            <div style="display: flex; justify-content: center; margin-top: 40px;">
+                <!-- SaSa Mirror App Card -->
+                <a href="sasa-mirror-download.html" style="text-decoration: none; color: inherit;">
+                    <div style="background: white; border-radius: 16px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; max-width: 250px; transition: 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                        
+                        <!-- CHANGED: Replaced phone icon with your custom logo -->
+                        <img src="sasamirrorlogo.png" alt="SaSa Mirror Logo" style="width: 64px; height: 64px; object-fit: contain; margin-bottom: 15px;">
+                        
+                        <h3 style="margin-bottom: 10px; color: var(--primary-color);">SaSa Mirror</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">Seamlessly cast your mobile screen to your PC.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary-color);">
+        <div class="container text-center">
+            <p>&copy; 2026 SASA Solutions. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

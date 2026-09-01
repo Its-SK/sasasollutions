@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics Tracker -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H85WKNMF92"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H85WKNMF92');
+
+      // Function to track downloads
+      function trackDownload(appName) {
+          gtag('event', 'app_download', {
+              'app_name': appName
+          });
+      }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download SaSa Mirror | SASA Solutions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: var(--bg-light);">
+
+    <!-- FIX: Removed the blue background style from the nav -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="sasalogo croped.png" alt="SASA Solutions Logo" class="logo-icon">
+                <span>SASA</span> Solutions
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="apps.html" style="color: var(--secondary-color); font-weight: bold;">Apps</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section-padding" style="padding-top: 120px; min-height: 80vh; display: flex; align-items: center;">
+        <div class="container text-center">
+            
+            <!-- CHANGED: Replaced large phone icon with your custom logo -->
+            <img src="sasamirrorlogo.png" alt="SaSa Mirror Logo" style="width: 90px; height: 90px; object-fit: contain; margin-bottom: 15px;">
+            
+            <h2 class="section-title">Download SaSa Mirror</h2>
+            <p class="section-subtitle">Choose your platform below to get started.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap;">
+                
+                <!-- Windows Download Card -->
+                <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); width: 300px;">
+                    <i class="fab fa-windows" style="font-size: 3rem; color: #0078D6; margin-bottom: 15px;"></i>
+                    <h3 style="margin-bottom: 20px;">For Windows</h3>
+                    <a href="https://github.com/Its-SK/sasasollutions/releases/download/v1.0.0/SaSaMirror_Setup_v1.0.exe" download onclick="trackDownload('SaSaMirror_Windows')" class="btn-primary" style="display: block; width: 100%; background: #0078D6;">Download .EXE</a>
+                </div>
+
+                <!-- Android Download Card -->
+                <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); width: 300px;">
+                    <i class="fab fa-android" style="font-size: 3rem; color: #3DDC84; margin-bottom: 15px;"></i>
+                    <h3 style="margin-bottom: 20px;">For Android</h3>
+                    <a href="https://github.com/Its-SK/sasasollutions/releases/download/v1.0.0/SaSa.Mirror.apk" download onclick="trackDownload('SaSaMirror_Android')" class="btn-primary" style="display: block; width: 100%; background: #3DDC84; color: #fff;">Download .APK</a>
+                </div>
+
+            </div>
+            
+            <p style="margin-top: 40px; color: #777; font-size: 0.9rem;">
+                <em>Note: Your device may display a security prompt when downloading direct files. This is normal for apps not distributed via official app stores.</em>
+            </p>
+
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
